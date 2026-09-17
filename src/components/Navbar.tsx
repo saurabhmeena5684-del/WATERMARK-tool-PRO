@@ -126,7 +126,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             type="button"
             id="help-guide-btn"
             onClick={onOpenHelp}
-            title="What's improved & How to use"
+            title="Contact & Suggestions"
             className="p-2 rounded-full text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
             <HelpCircle className="w-4 h-4" />

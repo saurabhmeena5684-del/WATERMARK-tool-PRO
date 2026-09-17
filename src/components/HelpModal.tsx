@@ -1,5 +1,5 @@
-import React from 'react';
-import { X, CheckCircle, Sun, Grid3X3, Layers, Sparkles, Sliders } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Mail, Copy, Check, Send, Sparkles, MessageSquare, Lightbulb } from 'lucide-react';
 import { AppleLiquidLogo } from './AppleLiquidLogo';
 
 interface HelpModalProps {
@@ -8,88 +8,152 @@ interface HelpModalProps {
 }
 
 export const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
+  const [copied, setCopied] = useState(false);
+  const email = 'saurabhmeena5684@gmail.com';
+
   if (!isOpen) return null;
 
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Fallback
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4 animate-in fade-in">
-      <div className="relative w-full max-w-2xl bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in">
+      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+        <div className="flex items-center justify-between px-6 py-4.5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/80">
           <div className="flex items-center gap-3">
             <AppleLiquidLogo size="sm" />
-            <h2 className="text-base font-bold text-slate-900 dark:text-white">
-              Improvements & Features Guide
-            </h2>
+            <div>
+              <h2 className="text-base font-bold text-slate-900 dark:text-white">
+                Contact & Suggestions
+              </h2>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                Feedback, inquiries & feature suggestions
+              </p>
+            </div>
           </div>
           <button
             type="button"
-            id="close-help-btn"
+            id="close-contact-modal-btn"
             onClick={onClose}
-            className="p-1.5 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="p-6 overflow-y-auto space-y-5 text-sm text-slate-600 dark:text-slate-300">
-          {/* Section 1: Daylight / Dark Theme */}
-          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20">
-            <div className="flex items-center gap-2 font-semibold text-amber-900 dark:text-amber-200 mb-1">
-              <Sun className="w-4 h-4 text-amber-500" />
-              1. Day / Light Mode & Dark Theme
+        {/* Content Body */}
+        <div className="p-6 overflow-y-auto space-y-5 text-sm">
+          {/* Profile & Contact Details Card */}
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-indigo-50/40 dark:from-slate-900 dark:to-indigo-950/30 border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+            {/* Elegant Monogram Avatar */}
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-500 text-white flex items-center justify-center font-black text-lg shadow-md shrink-0 ring-4 ring-indigo-500/20">
+              SM
             </div>
-            <p className="text-xs text-amber-950/80 dark:text-amber-200/80 leading-relaxed">
-              In your original Streamlit code, the theme was hardcoded to dark gradients which made reading labels outdoors or during daylight very difficult.
-              Now, you can easily toggle between <strong>Light Theme (Daylight high contrast)</strong> and <strong>Dark Studio Theme</strong> from the top navbar at any time!
-            </p>
+
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">
+                Saurabh Meena
+              </h3>
+              <p className="text-xs text-indigo-600 dark:text-indigo-400 font-medium mt-0.5">
+                Developer & Creator
+              </p>
+
+              {/* Email Pill Box */}
+              <div className="mt-3 inline-flex flex-wrap items-center gap-2 p-1.5 pl-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-200 shadow-2xs">
+                <Mail className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+                <span className="font-mono font-medium truncate max-w-[200px] sm:max-w-none">
+                  {email}
+                </span>
+
+                <button
+                  type="button"
+                  id="copy-email-btn"
+                  onClick={handleCopyEmail}
+                  className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 dark:bg-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 hover:text-indigo-600 dark:hover:text-indigo-300 text-slate-700 dark:text-slate-200 flex items-center gap-1 transition-colors cursor-pointer"
+                  title="Copy email address"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                      <span className="text-emerald-600 dark:text-emerald-400">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3 h-3" />
+                      <span>Copy</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
 
-          {/* Section 2: Custom Watermark Positioning */}
-          <div className="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20">
-            <div className="flex items-center gap-2 font-semibold text-indigo-900 dark:text-indigo-200 mb-1">
-              <Grid3X3 className="w-4 h-4 text-indigo-500" />
-              2. Pro Custom Positioning Options
+          {/* Suggestion & Feature Request Info Card */}
+          <div className="p-4.5 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/40 text-slate-700 dark:text-slate-300 space-y-3">
+            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider">
+              <Lightbulb className="w-4 h-4 text-amber-500" />
+              <span>Suggestions & Custom Features</span>
             </div>
-            <ul className="text-xs space-y-1.5 text-indigo-950/80 dark:text-indigo-200/80 list-disc list-inside">
-              <li><strong>9-Point Anchor Grid:</strong> Instantly snap watermarks to Top-Left, Top-Center, Top-Right, Center, Bottom-Right, etc.</li>
-              <li><strong>Click-to-Position on Canvas:</strong> Click the move icon on any photo card and click directly on the image to set the watermark location!</li>
-              <li><strong>Rotation Control:</strong> Freely rotate text or logos (-180° to 180°, with quick angle buttons).</li>
-              <li><strong>Tiled / Full Repeat Mode:</strong> Protect photographs with diagonal repeated watermarks across the entire surface.</li>
-            </ul>
-          </div>
 
-          {/* Section 3: Layout Columns */}
-          <div className="p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
-            <div className="flex items-center gap-2 font-semibold text-cyan-900 dark:text-cyan-200 mb-1">
-              <Sliders className="w-4 h-4 text-cyan-500" />
-              3. Flexible Responsive Layout Columns
-            </div>
-            <p className="text-xs text-cyan-950/80 dark:text-cyan-200/80 leading-relaxed">
-              Switch smoothly between <strong>2, 3, 4, or 6 columns</strong> depending on your display size. Also includes a full-screen zoom inspector and instant Before/After original comparison.
+            <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+              If you have any suggestions to make this tool better, or would like to request a new feature or custom option, feel free to reach out directly via email anytime.
             </p>
-          </div>
 
-          {/* Section 4: Performance */}
-          <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-            <div className="flex items-center gap-2 font-semibold text-emerald-900 dark:text-emerald-200 mb-1">
-              <CheckCircle className="w-4 h-4 text-emerald-500" />
-              4. Client-Side Speed & No Server Limits
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+              <a
+                href={`mailto:${email}?subject=New%20Feature%20Request%20-%20Watermark%20Studio`}
+                className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-indigo-400 dark:hover:border-indigo-500 shadow-xs hover:shadow-sm transition-all group cursor-pointer"
+              >
+                <div className="p-1.5 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
+                  <Sparkles className="w-4 h-4" />
+                </div>
+                <span className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                  New Feature Requests
+                </span>
+              </a>
+
+              <a
+                href={`mailto:${email}?subject=Feedback%20%26%20Improvements%20-%20Watermark%20Studio`}
+                className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-cyan-400 dark:hover:border-cyan-500 shadow-xs hover:shadow-sm transition-all group cursor-pointer"
+              >
+                <div className="p-1.5 rounded-lg bg-cyan-100 dark:bg-cyan-950 text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
+                  <MessageSquare className="w-4 h-4" />
+                </div>
+                <span className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                  Feedback & Improvements
+                </span>
+              </a>
             </div>
-            <p className="text-xs text-emerald-950/80 dark:text-emerald-200/80 leading-relaxed">
-              Unlike the Python Streamlit server which reloads on every slider change, this web studio computes canvas watermarks instantly in real-time, supports infinite high-res images, and packages your ZIP download directly on your device.
-            </p>
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="px-6 py-3 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+        {/* Footer Actions */}
+        <div className="px-6 py-3.5 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
+          <a
+            href={`mailto:${email}?subject=Suggestion%20for%20Watermark%20Studio`}
+            className="pro-pill-btn px-4 py-2 text-xs font-bold gap-1.5 inline-flex items-center text-slate-900 dark:text-white"
+          >
+            <Send className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+            <span>Send Email Directly</span>
+          </a>
+
           <button
             type="button"
+            id="close-contact-btn"
             onClick={onClose}
-            className="pro-pill-btn px-5 py-2 text-xs font-bold"
+            className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
           >
-            Got it, Let's Start
+            Close
           </button>
         </div>
       </div>
