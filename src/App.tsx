@@ -16,7 +16,6 @@ import { WatermarkCanvasPreview } from './components/WatermarkCanvasPreview';
 import { CropStudio } from './components/CropStudio';
 import { UploadDropzone } from './components/UploadDropzone';
 import { HelpModal } from './components/HelpModal';
-import { SAMPLE_IMAGES } from './utils/sampleImages';
 import { generateZipArchive, loadImage } from './utils/watermarkEngine';
 import {
   Sparkles,
@@ -141,7 +140,7 @@ export default function App() {
     }
   }, [theme]);
 
-  // App opens clean with zero default/sample images (user uploads their own photos)
+  // App opens with clean workspace (user uploads their own photos)
 
   // Update logo image element whenever logoDataUrl changes
   useEffect(() => {
@@ -211,16 +210,6 @@ export default function App() {
         enabled: true,
       },
     }));
-  };
-
-  // Load sample photos for instant preview
-  const handleLoadSamples = () => {
-    const samples: ImageItem[] = SAMPLE_IMAGES.map((s, idx) => ({
-      ...s,
-      id: `sample-${idx}-${Date.now()}`,
-      selected: false,
-    }));
-    setImages(samples);
   };
 
   // Remove single image
@@ -540,7 +529,6 @@ export default function App() {
         columns={columns}
         onColumnsChange={setColumns}
         imagesCount={images.length}
-        onLoadSamples={handleLoadSamples}
         onExportAllZip={handleExportAllZip}
         isExportingZip={isExportingZip}
         exportProgress={exportProgress}
@@ -634,13 +622,11 @@ export default function App() {
                 {images.length === 0 ? (
                   <UploadDropzone
                     onFilesSelected={handleFilesSelected}
-                    onLoadSamples={handleLoadSamples}
                   />
                 ) : (
                   <>
                     <UploadDropzone
                       onFilesSelected={handleFilesSelected}
-                      onLoadSamples={handleLoadSamples}
                       compact
                     />
                     <CropStudio
@@ -703,13 +689,11 @@ export default function App() {
                 {images.length === 0 ? (
                   <UploadDropzone
                     onFilesSelected={handleFilesSelected}
-                    onLoadSamples={handleLoadSamples}
                   />
                 ) : (
                   <>
                     <UploadDropzone
                       onFilesSelected={handleFilesSelected}
-                      onLoadSamples={handleLoadSamples}
                       compact
                     />
 

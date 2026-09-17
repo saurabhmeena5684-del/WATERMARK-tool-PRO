@@ -9,7 +9,6 @@ import {
   Grid2X2,
   Grid3X3,
   Columns,
-  Image as ImageIcon,
   Loader2,
   HelpCircle,
 } from 'lucide-react';
@@ -22,7 +21,6 @@ interface NavbarProps {
   columns: PreviewColumns;
   onColumnsChange: (cols: PreviewColumns) => void;
   imagesCount: number;
-  onLoadSamples: () => void;
   onExportAllZip: () => void;
   isExportingZip: boolean;
   exportProgress: number;
@@ -37,7 +35,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   columns,
   onColumnsChange,
   imagesCount,
-  onLoadSamples,
   onExportAllZip,
   isExportingZip,
   exportProgress,
@@ -119,19 +116,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               ))}
             </div>
-          )}
-
-          {/* Load Sample Images - Pro Pill Style */}
-          {imagesCount === 0 && (
-            <button
-              type="button"
-              id="load-samples-btn"
-              onClick={onLoadSamples}
-              className="pro-pill-btn hidden sm:inline-flex px-3.5 py-1.5 text-xs font-bold gap-1.5"
-            >
-              <ImageIcon className="w-3.5 h-3.5 text-indigo-500" />
-              <span>Load Samples</span>
-            </button>
           )}
 
           {/* Theme Toggle (Daylight / Studio Dark) */}

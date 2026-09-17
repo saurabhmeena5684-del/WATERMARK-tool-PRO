@@ -1,15 +1,13 @@
 import React, { useRef, useState } from 'react';
-import { UploadCloud, Image as ImageIcon, Sparkles } from 'lucide-react';
+import { UploadCloud, Image as ImageIcon } from 'lucide-react';
 
 interface UploadDropzoneProps {
   onFilesSelected: (files: FileList | File[]) => void;
-  onLoadSamples: () => void;
   compact?: boolean;
 }
 
 export const UploadDropzone: React.FC<UploadDropzoneProps> = ({
   onFilesSelected,
-  onLoadSamples,
   compact = false,
 }) => {
   const [isDragOver, setIsDragOver] = useState(false);
@@ -107,19 +105,9 @@ export const UploadDropzone: React.FC<UploadDropzoneProps> = ({
             type="button"
             id="browse-files-btn"
             onClick={() => inputRef.current?.click()}
-            className="pro-pill-btn px-5 py-2.5 text-xs font-bold text-slate-900 dark:text-white"
+            className="pro-pill-btn px-6 py-2.5 text-xs font-bold text-slate-900 dark:text-white cursor-pointer"
           >
             Select Images From Device
-          </button>
-
-          <button
-            type="button"
-            id="load-demo-btn"
-            onClick={onLoadSamples}
-            className="pro-pill-btn px-4 py-2.5 text-xs font-bold gap-1.5 text-slate-700 dark:text-slate-200"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-            Try with Sample Photos
           </button>
         </div>
       </div>
