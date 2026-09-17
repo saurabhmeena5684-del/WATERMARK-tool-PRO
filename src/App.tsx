@@ -141,10 +141,7 @@ export default function App() {
     }
   }, [theme]);
 
-  // Load sample photos automatically on first mount if empty
-  useEffect(() => {
-    handleLoadSamples();
-  }, []);
+  // App opens clean with zero default/sample images (user uploads their own photos)
 
   // Update logo image element whenever logoDataUrl changes
   useEffect(() => {
