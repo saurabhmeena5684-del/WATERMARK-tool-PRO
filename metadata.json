@@ -1,0 +1,6 @@
+{
+  "name": "Watermark & Crop Pro Studio",
+  "description": "Professional bulk watermark and image cropping studio with light and dark themes, multi-layer custom positioning, and high-resolution batch export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
