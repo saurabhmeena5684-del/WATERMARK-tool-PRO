@@ -158,7 +158,7 @@ export const WatermarkCanvasPreview: React.FC<WatermarkCanvasPreviewProps> = ({
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `watermarked_${item.name}`;
+      a.download = item.name;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

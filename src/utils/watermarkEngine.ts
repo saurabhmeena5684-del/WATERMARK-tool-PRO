@@ -434,6 +434,7 @@ export async function generateZipArchive(
   onProgress?: (progress: number, currentItemName: string) => void
 ): Promise<Blob> {
   const zip = new JSZip();
+  const usedNames = new Set<string>();
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
@@ -446,7 +447,18 @@ export async function generateZipArchive(
       const nameParts = item.name.split('.');
       const ext = nameParts.length > 1 ? nameParts.pop() : 'jpg';
       const base = nameParts.join('.');
-      const safeName = `${base}_watermarked.${ext}`;
+      
+      // Preserve strictly the original image name
+      let safeName = item.name || `${base}.${ext}`;
+      if (usedNames.has(safeName)) {
+        let count = 1;
+        while (usedNames.has(`${base}_(${count}).${ext}`)) {
+          count++;
+        }
+        safeName = `${base}_(${count}).${ext}`;
+      }
+      usedNames.add(safeName);
+
       zip.file(safeName, blob);
     } catch (err) {
       console.error(`Error processing ${item.name}:`, err);
