@@ -75,7 +75,7 @@ const DEFAULT_SETTINGS: WatermarkSettingsState = {
     glow: false,
     glowColor: '#ffffff',
     glowBlur: 14,
-    autoFitLongText: true,
+    autoFitLongText: false,
     textCase: 'original',
     tileRepeat: false,
     tileSpacing: 160,

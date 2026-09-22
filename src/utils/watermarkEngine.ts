@@ -76,31 +76,41 @@ export function calculateAnchorPosition(
       break;
     case 'custom':
     default: {
-      const availW = Math.max(10, containerWidth - itemWidth - 2 * mx);
-      const availH = Math.max(10, containerHeight - itemHeight - 2 * my);
+      const availW = containerWidth - itemWidth - 2 * mx;
+      const availH = containerHeight - itemHeight - 2 * my;
       baseX = mx + (availW * hOffset) / 100;
       baseY = my + (availH * vOffset) / 100;
-      return {
-        x: Math.max(5, Math.min(containerWidth - itemWidth - 5, baseX)),
-        y: Math.max(5, Math.min(containerHeight - itemHeight - 5, baseY)),
-      };
+      break;
     }
   }
 
   // Micro adjustments if slider has moved from default 50%
-  const xRange = containerWidth - itemWidth - 2 * mx;
-  const yRange = containerHeight - itemHeight - 2 * my;
+  if (position !== 'custom') {
+    const xRange = containerWidth - itemWidth - 2 * mx;
+    const yRange = containerHeight - itemHeight - 2 * my;
 
-  if (hOffset !== 50 || vOffset !== 50) {
-    const shiftX = ((hOffset - 50) / 50) * (xRange * 0.3);
-    const shiftY = ((vOffset - 50) / 50) * (yRange * 0.3);
-    baseX += shiftX;
-    baseY += shiftY;
+    if (hOffset !== 50 || vOffset !== 50) {
+      const shiftX = ((hOffset - 50) / 50) * (xRange * 0.3);
+      const shiftY = ((vOffset - 50) / 50) * (yRange * 0.3);
+      baseX += shiftX;
+      baseY += shiftY;
+    }
+  }
+
+  // Only clamp within boundaries if item actually fits within the container
+  let finalX = baseX;
+  if (itemWidth + 2 * mx <= containerWidth) {
+    finalX = Math.max(mx, Math.min(containerWidth - itemWidth - mx, baseX));
+  }
+
+  let finalY = baseY;
+  if (itemHeight + 2 * my <= containerHeight) {
+    finalY = Math.max(my, Math.min(containerHeight - itemHeight - my, baseY));
   }
 
   return {
-    x: Math.max(5, Math.min(containerWidth - itemWidth - 5, baseX)),
-    y: Math.max(5, Math.min(containerHeight - itemHeight - 5, baseY)),
+    x: finalX,
+    y: finalY,
   };
 }
 
@@ -126,21 +136,11 @@ export function drawTextWatermark(
   ctx.save();
 
   const minDim = Math.min(width, height);
-  let fontSize = Math.max(12, Math.round(minDim * (config.fontSizePercent / 100)));
+  // Full scaling directly according to user-selected percentage (1% to 100%)
+  const fontSize = Math.max(12, Math.round(minDim * (config.fontSizePercent / 100)));
 
   ctx.font = `600 ${fontSize}px ${config.fontFamily}`;
   ctx.textBaseline = 'top';
-
-  // Auto-fit long text if enabled
-  if (config.autoFitLongText) {
-    const maxAllowedWidth = width * 0.55;
-    let metrics = ctx.measureText(displayText);
-    while (metrics.width > maxAllowedWidth && fontSize > 14) {
-      fontSize -= 2;
-      ctx.font = `600 ${fontSize}px ${config.fontFamily}`;
-      metrics = ctx.measureText(displayText);
-    }
-  }
 
   const metrics = ctx.measureText(displayText);
   const textWidth = metrics.width;
