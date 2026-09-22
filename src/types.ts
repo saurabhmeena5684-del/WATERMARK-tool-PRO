@@ -20,7 +20,7 @@ export interface TextWatermarkConfig {
   enabled: boolean;
   text: string;
   fontFamily: string;
-  fontSizePercent: number; // 1 to 20% of image min dimension
+  fontSizePercent: number; // 1 to 100% of image min dimension
   textColor: string;
   outlineColor: string;
   outlineWidth: number; // 0 to 12px

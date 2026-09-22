@@ -542,12 +542,28 @@ export const SidebarWatermarkControls: React.FC<SidebarWatermarkControlsProps> =
               <input
                 type="range"
                 id="logo-size-slider"
-                min="5"
-                max="80"
+                min="1"
+                max="100"
                 value={settings.logo.sizePercent}
                 onChange={(e) => onUpdateLogo({ sizePercent: Number(e.target.value) })}
                 className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg cursor-pointer accent-indigo-600"
               />
+              <div className="flex justify-between gap-1 mt-1.5">
+                {[10, 25, 50, 75, 100].map((sz) => (
+                  <button
+                    key={sz}
+                    type="button"
+                    onClick={() => onUpdateLogo({ sizePercent: sz })}
+                    className={`px-1.5 py-0.5 text-[10px] rounded font-medium transition-colors ${
+                      settings.logo.sizePercent === sz
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-indigo-600'
+                    }`}
+                  >
+                    {sz}%
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div>
@@ -703,12 +719,28 @@ export const SidebarWatermarkControls: React.FC<SidebarWatermarkControlsProps> =
               <input
                 type="range"
                 id="filename-font-size-slider"
-                min="2"
-                max="25"
+                min="1"
+                max="100"
                 value={settings.filename.fontSizePercent}
                 onChange={(e) => onUpdateFilename({ fontSizePercent: Number(e.target.value) })}
                 className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg cursor-pointer accent-indigo-600"
               />
+              <div className="flex justify-between gap-1 mt-1.5">
+                {[8, 25, 50, 75, 100].map((sz) => (
+                  <button
+                    key={sz}
+                    type="button"
+                    onClick={() => onUpdateFilename({ fontSizePercent: sz })}
+                    className={`px-1.5 py-0.5 text-[10px] rounded font-medium transition-colors ${
+                      settings.filename.fontSizePercent === sz
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-indigo-600'
+                    }`}
+                  >
+                    {sz}%
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div>
@@ -933,14 +965,30 @@ export const SidebarWatermarkControls: React.FC<SidebarWatermarkControlsProps> =
               <input
                 type="range"
                 id="font-size-slider"
-                min="2"
-                max="25"
+                min="1"
+                max="100"
                 value={activeCustomText.fontSizePercent}
                 onChange={(e) =>
                   handleTextPropertyChange({ fontSizePercent: Number(e.target.value) })
                 }
                 className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg cursor-pointer accent-indigo-600"
               />
+              <div className="flex justify-between gap-1 mt-1.5">
+                {[8, 25, 50, 75, 100].map((sz) => (
+                  <button
+                    key={sz}
+                    type="button"
+                    onClick={() => handleTextPropertyChange({ fontSizePercent: sz })}
+                    className={`px-1.5 py-0.5 text-[10px] rounded font-medium transition-colors ${
+                      activeCustomText.fontSizePercent === sz
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-indigo-600'
+                    }`}
+                  >
+                    {sz}%
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div>
